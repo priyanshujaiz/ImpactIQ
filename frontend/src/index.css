@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* ─── Google Font ─────────────────────────────────────────── */
+/* Plus Jakarta Sans is loaded via index.html <link> */
+
+/* ─── CSS Design Tokens ───────────────────────────────────── */
+:root {
+  /* Colors */
+  --color-sidebar:        #0f172a;
+  --color-sidebar-hover:  #1e293b;
+  --color-sidebar-sub:    #334155;
+
+  --color-primary:        #2563eb;
+  --color-primary-light:  #dbeafe;
+
+  --color-canvas:         #f8fafc;
+  --color-card:           #ffffff;
+  --color-card-bg:        #f1f5f9;
+  --color-border:         #e2e8f0;
+
+  --color-danger:         #dc2626;
+  --color-danger-bg:      #fee2e2;
+  --color-warning:        #d97706;
+  --color-warning-bg:     #fef3c7;
+  --color-success:        #16a34a;
+  --color-success-bg:     #dcfce7;
+  --color-info:           #0ea5e9;
+  --color-info-bg:        #e0f2fe;
+
+  --color-text-primary:   #0f172a;
+  --color-text-secondary: #64748b;
+  --color-text-muted:     #94a3b8;
+
+  /* Spacing */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  20px;
+  --space-xl:  32px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-modal: 0 20px 60px rgba(0,0,0,.18);
+}
+
+/* ─── Global Base ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ─── Focus ring ──────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ─── Shimmer / Skeleton animation ───────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ─── Typewriter ──────────────────────────────────────────── */
+@keyframes typewriter {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.typewriter-line {
+  animation: typewriter 0.4s ease both;
+}
+
+/* ─── Pulse dot (alert badge) ─────────────────────────────── */
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-danger);
+  animation: pulse-ring 1.4s ease-out infinite;
+}

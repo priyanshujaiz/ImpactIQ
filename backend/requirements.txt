@@ -1,0 +1,13 @@
+dotenv
+drizzle-orm 
+pg
+drizzle-kit
+express
+dotenv
+jsonwebtoken
+bcrypt
+cors
+nodemon
+axios
+@google/generative-ai
+@google/genai

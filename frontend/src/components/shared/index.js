@@ -1,0 +1,9 @@
+// Shared component library — single import point
+export { default as SummaryCard } from "./SummaryCard";
+export { default as StatusBadge } from "./StatusBadge";
+export { default as UrgencyBar } from "./UrgencyBar";
+export { default as PageHeader } from "./PageHeader";
+export { default as Modal } from "./Modal";
+export { default as DataTable } from "./DataTable";
+export { default as EmptyState } from "./EmptyState";
+export { default as AIInsightBox } from "./AIInsightBox";
