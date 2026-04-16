@@ -10,7 +10,7 @@ if (!API_KEY) {
 
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
-const MODEL = "gemini-2.5-flash";
+const MODEL = "gemini-2.5-flash-lite";
 
 
 const callGemini = async (prompt) => {
