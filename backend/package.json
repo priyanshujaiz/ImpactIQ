@@ -1,14 +1,18 @@
 {
-  "name": "backend",
+  "name": "impactiq-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "ImpactIQ Resource Allocation Backend API",
+  "main": "src/server.js",
   "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "generate": "drizzle-kit generate",
-    "migrate": "drizzle-kit migrate",
+    "migrate": "drizzle-kit push",
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "deploy": "npm run migrate && npm run start"
   },
   "keywords": [],
   "author": "",
