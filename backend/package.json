@@ -8,7 +8,7 @@
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "dev": "nodemon src/server.js",
-    "start": "node index.js"
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
