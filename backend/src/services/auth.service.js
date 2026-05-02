@@ -1,15 +1,14 @@
-
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { db } from "../db/index.js";
 import { users } from "../db/schema.js";
 import { eq } from "drizzle-orm";
 
+import { validAuthData } from "../utils/validator.util.js";
+import { generateToken } from "../utils/token.util.js";
+import { hashPassword, comparePassword } from "../utils/hash.util.js";
+
 export const registerUser = async (data) => {
   try {
-    if (!data.email || !data.password) {
-      throw new Error("Email and password are required");
-    }
+    validAuthData(data);
 
     const [existingUser] = await db
       .select()
@@ -21,7 +20,7 @@ export const registerUser = async (data) => {
       throw new Error("User already exists");
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const hashedPassword = await hashPassword(data.password);
 
     const [newUser] = await db
       .insert(users)
@@ -29,12 +28,13 @@ export const registerUser = async (data) => {
         email: data.email,
         password: hashedPassword,
         name: data.name,
-        role: data.role || "volunteer",
+        role: data.role,
       })
       .returning({
         id: users.id,
         email: users.email,
         role: users.role,
+        name: users.name,
       });
 
     const { id, email, role, name } = newUser;
@@ -52,9 +52,7 @@ export const registerUser = async (data) => {
 
 export const loginUser = async (data) => {
   try {
-    if (!data.email || !data.password) {
-      throw new Error("Email and password are required");
-    }
+    validAuthData(data);
 
     const [user] = await db
       .select()
@@ -66,24 +64,14 @@ export const loginUser = async (data) => {
       throw new Error("Invalid email or password");
     }
 
-    const isMatch = await bcrypt.compare(data.password, user.password);
+    const isMatch = await comparePassword(data.password,user.password);
     if (!isMatch) {
       throw new Error("Invalid email or password");
     }
 
-    if (!process.env.JWT_SECRET) {
-      throw new Error("JWT_SECRET not configured");
-    }
+    
 
-    const token = jwt.sign(
-      { 
-        id: user.id, 
-        email: user.email,
-        role: user.role   
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    const token = await generateToken(user);
 
     const { password, ...safeUser } = user;
 

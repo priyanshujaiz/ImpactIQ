@@ -3,6 +3,8 @@ import axios from "axios";
 const ENGINE_URL = process.env.ENGINE_URL || "http://localhost:8000/engine";
 
 // Render free tier cold starts take ~30-50s — use 90s timeout
+// NOTE: baseURL must end with path, routes must NOT start with /
+// axios drops the baseURL path when route starts with /
 const engineClient = axios.create({
   baseURL: ENGINE_URL,
   timeout: 90000,
@@ -10,7 +12,7 @@ const engineClient = axios.create({
 
 export const optimizeAllocation = async (data) => {
   try {
-    const response = await engineClient.post("/optimize", data);
+    const response = await engineClient.post("optimize", data); // no leading slash
     return response.data;
   } catch (error) {
     console.error("Engine Error:", error.message);
@@ -20,7 +22,7 @@ export const optimizeAllocation = async (data) => {
 
 export const scoreZones = async (zonesData) => {
   try {
-    const response = await engineClient.post("/score/zones", {
+    const response = await engineClient.post("score/zones", { // no leading slash
       zones: zonesData,
     });
     return response.data;
@@ -40,3 +42,4 @@ export const warmUpEngine = async () => {
     console.warn("⚠️ Engine warm-up failed (may still be starting):", err.message);
   }
 };
+

@@ -94,18 +94,23 @@ backend/
 │   │   ├── alert.route.js              # /poll + GET / + /active + PATCH /:id/resolve
 │   │   └── metrics.route.js            # /summary + /zones + /history
 │   │
-│   └── services/
-│       ├── auth.service.js             # registerUser & loginUser business logic
-│       ├── zone.services.js            # Zone CRUD, volunteers, history, recompute scores
-│       ├── volunteer.service.js        # Volunteer CRUD, location, availability, assign
-│       ├── report.service.js           # Gemini parse → zone upsert → score recompute
-│       ├── allocation.service.js       # Run → engine → Gemini explain → save → apply
-│       ├── simulation.service.js       # Engine simulate → Gemini analysis → save
-│       ├── alert.service.js            # Rule-based + Gemini alert generation
-│       ├── metrics.service.js          # Summary, zone status, impact history
-│       ├── engine.service.js           # HTTP bridge to Python engine (optimize + score)
-│       └── gemini.service.js           # parseFieldReport, generateExplanation,
-│                                       #   analyzeSimulation, generateAlerts
+│   ├── services/
+│   │   ├── auth.service.js             # registerUser & loginUser business logic
+│   │   ├── zone.services.js            # Zone CRUD, volunteers, history, recompute scores
+│   │   ├── volunteer.service.js        # Volunteer CRUD, location, availability, assign
+│   │   ├── report.service.js           # Gemini parse → zone upsert → score recompute
+│   │   ├── allocation.service.js       # Run → engine → Gemini explain → save → apply
+│   │   ├── simulation.service.js       # Engine simulate → Gemini analysis → save
+│   │   ├── alert.service.js            # Rule-based + Gemini alert generation
+│   │   ├── metrics.service.js          # Summary, zone status, impact history
+│   │   ├── engine.service.js           # HTTP bridge to Python engine (optimize + score)
+│   │   └── gemini.service.js           # parseFieldReport, generateExplanation,
+│   │                                   #   analyzeSimulation, generateAlerts
+│   │
+│   └── utils/
+│       ├── hash.util.js                # bcrypt hash + compare (salt rounds = 10)
+│       ├── token.util.js               # JWT sign (payload: id, email, role; expires 7d)
+│       └── validator.util.js           # shared auth body checks (email + password required)
 │
 ├── drizzle/                            # Auto-generated SQL migrations
 ├── docker-compose.yml                  # PostgreSQL 15 container config
